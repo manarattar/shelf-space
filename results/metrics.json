@@ -1,0 +1,69 @@
+{
+  "overall": {
+    "seasonal_naive": {
+      "wape": 0.6843290303212248,
+      "mase": 0.8473049899835094
+    },
+    "lightgbm": {
+      "wape": 0.6415853415884566,
+      "mase": 0.8144763075079924
+    }
+  },
+  "by_category": {
+    "FOODS": {
+      "seasonal_naive": {
+        "wape": 0.6346487203018252,
+        "mase": 0.8187082409497011
+      },
+      "lightgbm": {
+        "wape": 0.5934511475901422,
+        "mase": 0.7656371697480583
+      }
+    },
+    "HOBBIES": {
+      "seasonal_naive": {
+        "wape": 0.7886951767707447,
+        "mase": 0.8773051903083411
+      },
+      "lightgbm": {
+        "wape": 0.7565452356135014,
+        "mase": 0.8789901919681319
+      }
+    },
+    "HOUSEHOLD": {
+      "seasonal_naive": {
+        "wape": 0.722849015597034,
+        "mase": 0.8576209285642143
+      },
+      "lightgbm": {
+        "wape": 0.6716237738247302,
+        "mase": 0.8214721652518017
+      }
+    }
+  },
+  "horizon_days": 28,
+  "n_series": 900,
+  "holdout_start": "2024-02-12",
+  "holdout_end": "2024-03-10",
+  "item_28d_totals": {
+    "overall": {
+      "seasonal_naive": 0.17025667967577304,
+      "lightgbm": 0.1544598093665566
+    },
+    "by_category": {
+      "FOODS": {
+        "seasonal_naive": 0.1571496550083274,
+        "lightgbm": 0.14434213656911732
+      },
+      "HOBBIES": {
+        "seasonal_naive": 0.19380998663588872,
+        "lightgbm": 0.1698384157453529
+      },
+      "HOUSEHOLD": {
+        "seasonal_naive": 0.1825140628995142,
+        "lightgbm": 0.1653963180772181
+      }
+    }
+  },
+  "data_source": "synthetic (M5 schema)"
+}

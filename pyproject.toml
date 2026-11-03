@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "shelfspace"
+version = "0.1.0"
+description = "Shelf-space allocation demo: demand forecast, constrained optimiser and simulated A/B test on retail data."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.24",
+  "pandas>=2.0",
+  "scipy>=1.10",
+  "pyarrow>=14",
+]
+
+[project.optional-dependencies]
+app = ["streamlit>=1.35", "altair>=5"]
+train = ["pyspark>=3.5,<4", "lightgbm>=4.0", "scikit-learn>=1.3"]
+dev = ["pytest>=8", "ruff>=0.5"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["spark: needs Java and PySpark (slow)"]
+
+[tool.ruff]
+line-length = 100
+src = ["src", "tests", "app", "scripts"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["E501"]  # line length is handled by ruff format
