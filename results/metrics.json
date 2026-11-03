@@ -1,69 +1,69 @@
 {
   "overall": {
     "seasonal_naive": {
-      "wape": 0.6843290303212248,
-      "mase": 0.8473049899835094
+      "wape": 0.5835527869415562,
+      "mase": 1.0819021343664685
     },
     "lightgbm": {
-      "wape": 0.6415853415884566,
-      "mase": 0.8144763075079924
+      "wape": 0.5337353054678533,
+      "mase": 1.010444545257637
     }
   },
   "by_category": {
     "FOODS": {
       "seasonal_naive": {
-        "wape": 0.6346487203018252,
-        "mase": 0.8187082409497011
+        "wape": 0.4951926832806937,
+        "mase": 1.174281901134424
       },
       "lightgbm": {
-        "wape": 0.5934511475901422,
-        "mase": 0.7656371697480583
+        "wape": 0.45288094283314134,
+        "mase": 1.0965377329793091
       }
     },
     "HOBBIES": {
       "seasonal_naive": {
-        "wape": 0.7886951767707447,
-        "mase": 0.8773051903083411
+        "wape": 0.9613260420067472,
+        "mase": 0.864551059620592
       },
       "lightgbm": {
-        "wape": 0.7565452356135014,
-        "mase": 0.8789901919681319
+        "wape": 0.8775141562410281,
+        "mase": 0.8160894371970367
       }
     },
     "HOUSEHOLD": {
       "seasonal_naive": {
-        "wape": 0.722849015597034,
-        "mase": 0.8576209285642143
+        "wape": 0.6142396095717884,
+        "mase": 1.1449272740416225
       },
       "lightgbm": {
-        "wape": 0.6716237738247302,
-        "mase": 0.8214721652518017
+        "wape": 0.5629174759857589,
+        "mase": 1.0626168064401105
       }
     }
   },
   "horizon_days": 28,
   "n_series": 900,
-  "holdout_start": "2024-02-12",
-  "holdout_end": "2024-03-10",
+  "holdout_start": "2016-04-25",
+  "holdout_end": "2016-05-22",
   "item_28d_totals": {
     "overall": {
-      "seasonal_naive": 0.17025667967577304,
-      "lightgbm": 0.1544598093665566
+      "seasonal_naive": 0.2602260610701226,
+      "lightgbm": 0.23902247729728568
     },
     "by_category": {
       "FOODS": {
-        "seasonal_naive": 0.1571496550083274,
-        "lightgbm": 0.14434213656911732
+        "seasonal_naive": 0.25733234378313224,
+        "lightgbm": 0.23343057710121312
       },
       "HOBBIES": {
-        "seasonal_naive": 0.19380998663588872,
-        "lightgbm": 0.1698384157453529
+        "seasonal_naive": 0.2895445641527914,
+        "lightgbm": 0.2633964522798999
       },
       "HOUSEHOLD": {
-        "seasonal_naive": 0.1825140628995142,
-        "lightgbm": 0.1653963180772181
+        "seasonal_naive": 0.2514247481108312,
+        "lightgbm": 0.24069458438287153
       }
     }
   },
-  "data_source": "synthetic (M5 schema)"
+  "data_source": "real M5 Walmart sales (3 stores, 2011 to 2016; public CC-BY-4.0 copy)"
 }

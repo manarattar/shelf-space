@@ -232,7 +232,7 @@ with st.expander("Assumptions and limits (read this)", expanded=False):
     st.markdown(
         f"""
 - **Data:** {metrics["data_source"]}. 3 stores, 3 categories, {len(demand) // 3} items per store.
-  The code reads the public M5 Walmart files unchanged if they are placed in `data/raw/`.
+  Forecast accuracy is measured on real held-out sales (25 Apr to 22 May 2016).
 - **Shelf space is simulated.** Public data has no planogram, so sales are assumed to follow
   `sales = demand × (space ÷ current space)^α` with α = {ALPHA}. Real α would have to come from store
   experiments or planogram history.

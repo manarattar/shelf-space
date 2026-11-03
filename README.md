@@ -8,11 +8,12 @@ shows how a real store experiment would be designed and powered.
 
 ![Screenshot of the demo](docs/screenshot.png)
 
-> **Read this first.** The demo runs on **synthetic retail data in the public M5 (Walmart) format**.
-> Public data has no shelf plans, so the link between shelf space and sales is an **assumption**
-> (`sales = demand × (space / current space)^α`), not a measurement. The uplifts show how the method
-> works, not what it would earn in a real store. The code reads the real M5 files unchanged if they
-> are placed in `data/raw/`.
+> **Read this first.** The demo runs on the **real public M5 (Walmart) sales data** (3 stores, 3
+> categories, 300 best-selling items, 2011 to 2016). Public data has no shelf plans, so the link
+> between shelf space and sales is an **assumption** (`sales = demand × (space / current space)^α`),
+> not a measurement. The forecast numbers are measured on real held-out sales; the revenue uplifts
+> show how the method works, not what it would earn in a real store. A synthetic generator with the
+> same schema is included for tests and offline use.
 
 ## What it does
 
@@ -27,26 +28,26 @@ shows how a real store experiment would be designed and powered.
 Heavy work (Spark and training) runs offline and writes small files to `results/`. The live app only
 reads those and runs the fast optimiser, so no Spark in production.
 
-## Results (synthetic data, 900 store-item series, 28-day holdout)
+## Results (real M5 data, 900 store-item series, 28-day holdout 25 Apr to 22 May 2016)
 
 | Forecast error (WAPE, lower is better) | Seasonal naive | LightGBM |
 |---|---|---|
-| 28-day total per item (what the shelf decision uses) | 17.0% | **15.4%** |
-| Daily per item | 68.4% | **64.2%** |
+| 28-day total per item (what the shelf decision uses) | 26.0% | **23.9%** |
+| Daily per item | 58.4% | **53.4%** |
 
 Daily item-level error is high because most items sell a few units a day (count noise); totals over
-28 days average much of it out. Per category the model wins on WAPE everywhere; on MASE it is level
-with the baseline for HOBBIES. Full numbers in `results/metrics.json`.
+28 days average much of it out. The model wins on WAPE in every category and on MASE overall
+(1.01 against 1.08). Full numbers in `results/metrics.json`.
 
-| Shelf allocation uplift in expected revenue | FOODS | HOUSEHOLD | HOBBIES |
+| Shelf allocation uplift in expected revenue (mean of 3 stores) | FOODS | HOUSEHOLD | HOBBIES |
 |---|---|---|---|
-| vs equal split (stylised "current") | +25.9% | +12.8% | +9.8% |
-| vs proportional-to-revenue rule | +0.8% | +0.2% | +0.1% |
+| vs equal split (stylised "current") | +20.6% | +10.6% | +10.3% |
+| vs proportional-to-revenue rule | +0.5% | +0.3% | +0.4% |
 
 The honest reading: most of the gain comes from not splitting space equally. Against a sensible rule
-the optimiser adds under 1%, and a change that small would need roughly 900 to 1,000 stores per arm
-to confirm in a store test (about 30 stores per arm can only detect effects above about 4%). The app
-lets you switch between both comparisons and shows the power calculation.
+the optimiser adds well under 1%, and a change that small would need roughly 2,400 to 8,400 stores
+per arm to confirm in a store test (about 30 stores per arm can only detect effects above about 4%).
+The app lets you switch between both comparisons and shows the power calculation.
 
 The allocation is chosen from the forecast and then re-scored with what actually sold in the held-out
 window ("backtest"), so forecast error cannot quietly inflate the number.
@@ -65,7 +66,7 @@ window ("backtest"), so forecast error cannot quietly inflate the number.
 
 ```bash
 pip install -e ".[app,train,dev]"
-python scripts/make_synthetic.py        # or put the M5 csv files in data/raw/
+python scripts/make_synthetic.py        # or put the real M5 csv files in data/raw/ (see below)
 python -m shelfspace.pipeline           # Spark + LightGBM, writes results/ (~3 min)
 streamlit run app/streamlit_app.py
 pytest -q                               # add -m "not spark" to skip the Java-dependent tests
@@ -76,10 +77,12 @@ heap (`get_spark` in `data.py`).
 
 ## Using real M5 data
 
-Download `calendar.csv`, `sales_train_evaluation.csv` and `sell_prices.csv` from the
-[M5 Forecasting competition](https://www.kaggle.com/competitions/m5-forecasting-accuracy/data) into
-`data/raw/`, then run the pipeline. It keeps the best-selling items per category for 3 stores
-(`config.py`). The synthetic generator uses the same schema.
+The published results use the real M5 files (`calendar.csv`, `sales_train_evaluation.csv`,
+`sell_prices.csv`), put in `data/raw/` (git-ignored). The competition is on
+[Kaggle](https://www.kaggle.com/competitions/m5-forecasting-accuracy/data); a CC-BY-4.0 copy of the
+same archive is on [Zenodo](https://zenodo.org/records/12636070). The pipeline keeps the
+best-selling items per category for 3 stores (`config.py`). The synthetic generator uses the same
+schema.
 
 ## What I would do with real data
 
