@@ -10,3 +10,4 @@ data/raw/
 data/interim/
 *.egg-info/
 .env
+PLAN.md
